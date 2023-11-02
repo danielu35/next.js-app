@@ -12,7 +12,3 @@ export async function POST(request: NextRequest) {
     if (!body.name) return NextResponse.json({ error: "Name is required"}, { status: 400 })
     return NextResponse.json({ id: 1, name: body.name }, { status: 201});
 }
-
-export function PUT(request: NextRequest) {
-    
-}
