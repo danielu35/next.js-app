@@ -1,51 +1,41 @@
 import { NextRequest, NextResponse } from "next/server";
 import schema from "../schema";
+import { parseCommandLine } from "typescript";
 
 export function GET(
   request: NextRequest,
   { params }: { params: { id: number } }
 ) {
-  // Fetch data from DB
-  // If not found, return 404 error
-  // Else return data
-  if (params.id > 10)
+  if (params.id > 3)
     return NextResponse.json({ error: "User not found" }, { status: 404 });
 
-  return NextResponse.json({ id: 1, name: "Daniel" });
+  return NextResponse.json({ id: 1, name: "Milk", price: 2.5 });
 }
 
 export async function PUT(
   request: NextRequest,
   { params }: { params: { id: number } }
 ) {
-  // Validate the request body
   const body = await request.json();
   const validation = schema.safeParse(body);
   if (!validation.success)
-    // If the request body is invalid, return a 400 error
     return NextResponse.json(validation.error.errors, { status: 400 });
 
-  // Fetch use with given id
   if (params.id > 10)
-    // If user does not exist, return 400
-    return NextResponse.json({ error: "User not found" }, { status: 400 });
+    return NextResponse.json({ error: "Product not found" }, { status: 400 });
 
-  // Update user
-  // Return the updated user
-  return NextResponse.json({ id: 1, name: body.name });
+  return NextResponse.json(
+    { id: 1, name: body.name, price: body.price },
+    { status: 200 }
+  );
 }
 
 export function DELETE(
   request: NextRequest,
   { params }: { params: { id: number } }
 ) {
-  // Fetch user from DB
+  if (params.id > 3)
+    return NextResponse.json({ error: "Product not found" }, { status: 404 });
 
-  // If not found, return 404
-  if (params.id > 10)
-    return NextResponse.json({ error: "User not found" }, { status: 404 });
-  // Delete the user
-
-  // Return 200
   return NextResponse.json({});
 }
