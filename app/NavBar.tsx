@@ -24,9 +24,10 @@ const NavBar = () => {
         <span className="loading loading-spinner loading-sm absolute right-10" />
       )}
       {status === "authenticated" && (
-        <div className="absolute right-10">{`Signed in as: ${
-          session.user!.name
-        }`}</div>
+        <div className="absolute right-10">
+          {`Signed in as: ${session.user!.name}`}
+          <Link className="ml-5" href="/api/auth/signout">Sign out</Link>
+        </div>
       )}
       {status === "unauthenticated" && (
         <Link href={"/api/auth/signin"} className="absolute right-10">
