@@ -6,6 +6,7 @@ interface User {
   id: number;
   name: string;
   email: string;
+  password: string;
 }
 
 interface Props {
@@ -13,7 +14,7 @@ interface Props {
 }
 
 const UserTable = async ({ sortOrder }: Props) => {
-  const res = await fetch("https://jsonplaceholder.typicode.com/users", {
+  const res = await fetch("http://localhost:3000/api/users", {
     cache: "no-store",
   });
   const users: User[] = await res.json();

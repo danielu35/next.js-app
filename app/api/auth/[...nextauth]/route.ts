@@ -6,7 +6,7 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GitHubProvider from "next-auth/providers/github";
 import TwitterProvider from "next-auth/providers/twitter";
-import bcrypt from 'bcrypt'
+// import bcrypt from 'bcrypt'
 
 // I need to set authOptions to NextAuthOptions type so i can have more options
 export const authOptions: NextAuthOptions = {
@@ -16,17 +16,18 @@ export const authOptions: NextAuthOptions = {
             name: "Credentials",
             credentials: {
                 email: { label: "Email", type: "email", placeholder: "jsmith@gmail.com"},
-                password: { label: "Password", type: "password"}
+                password: { label: "Password", type: "password", placeholder: "Password12"}
             },
             async authorize(credentials, req) {
                 if(!credentials?.email || !credentials.password) return null;
 
                 const user = await prisma.user.findUnique({ where: {email: credentials.email}});
-
+console.log("user", user)
                 if(!user) return null;
-
-                const passwordMatch = await bcrypt.compare(credentials.password, user.hashedPassword!);
-
+console.log("credentials", credentials)
+                // const passwordMatch = await bcrypt.compare(credentials.password, user.hashedPassword!);
+                const passwordMatch = (credentials.password === user.hashedPassword);
+console.log("passwordMatch", passwordMatch)
                 return passwordMatch ? user : null;
 
             }

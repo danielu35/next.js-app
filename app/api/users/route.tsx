@@ -21,6 +21,7 @@ export async function POST(request: NextRequest) {
     data: {
       name: body.name,
       email: body.email,
+      hashedPassword: body.hashedPassword,
     },
   });
   return NextResponse.json(createUser, { status: 201 });
