@@ -1,4 +1,5 @@
 "use client";
+import { User } from "@prisma/client";
 import React, { useState } from "react";
 
 const CreateUser = () => {
@@ -8,14 +9,14 @@ const CreateUser = () => {
     hashedPassword: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 console.log(formData)
     const response = await fetch("http://localhost:3000/api/users", {
